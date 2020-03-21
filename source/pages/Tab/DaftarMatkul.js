@@ -21,6 +21,12 @@ export default class DaftarMatkul extends React.Component {
     };
   }
 
+  // getDaftarAbsen = async () => {
+  //   try {
+  //     const daftarAbsen = await AsyncStorage.get;
+  //   }
+  // };
+
   getMatkul = async () => {
     try {
       const value = await AsyncStorage.getItem('daftarMatkul');
@@ -50,37 +56,9 @@ export default class DaftarMatkul extends React.Component {
   //   }
   // };
 
-  getFromStorage = async () => {
-    try {
-      const value = await AsyncStorage.getItem('@employees');
-      if (value !== null) {
-        // value previously stored
-        console.log('ini', value);
-        this.setState({data: JSON.parse(value)});
-      } else {
-        console.log('kosong');
-      }
-    } catch (e) {
-      console.log(e);
-      // error reading value
-    }
-  };
-
   componentDidMount = async () => {
     // await this.getFromStorage();
     await this.getMatkul();
-  };
-
-  FlatListItemSeparator = () => {
-    return (
-      <View
-        style={{
-          height: 0.5,
-          width: '100%',
-          backgroundColor: 'rgba(0,0,0,0.5)',
-        }}
-      />
-    );
   };
 
   cekAbsensiMatkul = async () => {
@@ -107,6 +85,18 @@ export default class DaftarMatkul extends React.Component {
       });
   };
 
+  FlatListItemSeparator = () => {
+    return (
+      <View
+        style={{
+          height: 0.5,
+          width: '100%',
+          backgroundColor: 'rgba(0,0,0,0.5)',
+        }}
+      />
+    );
+  };
+
   renderItem = ({item}) => (
     <TouchableOpacity
       style={styles.list}
@@ -121,7 +111,8 @@ export default class DaftarMatkul extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text>Selamat Datang</Text>
+        <Text style={{fontSize: 20, marginVertical: 10}}>Selamat Datang</Text>
+        <View style={{borderBottomWidth: 1}}></View>
         <FlatList
           data={this.state.matkul}
           ItemSeparatorComponent={this.FlatListItemSeparator}
@@ -138,6 +129,7 @@ export default class DaftarMatkul extends React.Component {
     );
   }
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
