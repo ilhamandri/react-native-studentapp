@@ -5,7 +5,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 
 import DaftarMatkul from './DaftarMatkul';
 import ScanAbsen from './ScanAbsen';
-import Logout from './Logout';
+import Profil from './Profil';
 
 const BottomTab = createBottomTabNavigator();
 // const DaftarMatkulStack = createStackNavigator();
@@ -14,9 +14,21 @@ class Index extends Component {
   render() {
     return (
       <BottomTab.Navigator initialRouteName="DaftarMatkul">
-        <BottomTab.Screen name="DaftarMatkul" component={DaftarMatkul} />
-        <BottomTab.Screen name="ScanAbsen" component={ScanAbsen} />
-        <BottomTab.Screen name="Logout" component={Logout} />
+        <BottomTab.Screen
+          name="DaftarMatkul"
+          component={DaftarMatkul}
+          options={{title: 'Daftar Mata Kuliah'}}
+        />
+        <BottomTab.Screen
+          name="ScanAbsen"
+          component={ScanAbsen}
+          options={{title: 'Scan Absen'}}
+        />
+        <BottomTab.Screen
+          name="Profil"
+          component={Profil}
+          options={{title: 'Profil'}}
+        />
       </BottomTab.Navigator>
     );
   }

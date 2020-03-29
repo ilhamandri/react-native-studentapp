@@ -1,5 +1,5 @@
 const GlobalVar = {
-  host: 'http://dummy.restapiexample.com/api/v1/',
+  host: 'http://192.168.0.112/web-absensi/',
 };
 
 export default GlobalVar;

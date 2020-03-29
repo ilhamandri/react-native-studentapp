@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 
 import AsyncStorage from '@react-native-community/async-storage';
+import {fetchData} from '../utils/helper';
 
 class Login extends Component {
   constructor(props) {
@@ -19,59 +20,47 @@ class Login extends Component {
       email: 'ilham@unpar.ac.id',
       password: 'ilham',
       name: '',
-      status: '',
+      loading: false,
     };
   }
 
+  successHandler = async mahasiswa => {
+    const {navigation} = this.props;
+    await AsyncStorage.setItem('name', mahasiswa.nama);
+    await AsyncStorage.setItem('token', mahasiswa.token);
+    await AsyncStorage.setItem('profile', JSON.stringify(mahasiswa));
+    navigation.reset({
+      index: 0,
+      routes: [{name: 'Tab'}],
+    });
+  };
+
+  rejectHandler = () => {
+    const {email, password} = this.state;
+
+    if (email == '' || password == '' || (email == '' && password == '')) {
+      Alert.alert('LOGIN GAGAL', 'Email atau Password tidak boleh kosong');
+    } else {
+      Alert.alert('LOGIN GAGAL', 'Email atau Password salah');
+    }
+  };
+
   loginClicked = async () => {
-    const loginData = {email: this.state.email, password: this.state.password};
+    const {email, password} = this.state;
+    const loginData = {email, password};
 
-    fetch('http://192.168.0.105/web-absensi/login_api.php', {
-      method: 'POST', // or 'PUT'
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(loginData),
-    })
-      .then(response => response.json())
-      .then(async data => {
-        this.setState({status: data.STATUS_CODE});
-        console.log(data);
-        if (this.state.status == 'OK') {
-          // console.log(data.mahasiswa.token);
-          await AsyncStorage.setItem('name', data.mahasiswa.nama);
-          await AsyncStorage.setItem('token', data.mahasiswa.token);
-          await AsyncStorage.setItem(
-            'daftarMatkul',
-            JSON.stringify(data.matakuliah),
-          );
+    const {STATUS_CODE, mahasiswa} = await fetchData(
+      'POST',
+      'http://192.168.0.112/web-absensi/login_api.php',
+      loginData,
+    );
 
-          // this.props.navigation.navigate('Tab', {namaMahasiswa: 'andri'});
-          this.props.navigation.reset({
-            index: 0,
-            routes: [{name: 'Tab'}],
-          });
-          this.setState({email: '', password: ''});
-        } else {
-          if (
-            this.state.email == '' ||
-            this.state.password == '' ||
-            (this.state.email == '' && this.state.password == '')
-          ) {
-            Alert.alert(
-              'LOGIN GAGAL',
-              'Email atau Password tidak boleh kosong',
-            );
-            this.setState({email: '', password: ''});
-          } else {
-            Alert.alert('LOGIN GAGAL', 'Email atau Password salah');
-            this.setState({email: '', password: ''});
-          }
-        }
-      })
-      .catch(error => {
-        console.error('Error:', error);
-      });
+    if (STATUS_CODE === 'OK') {
+      this.successHandler(mahasiswa);
+    } else {
+      this.rejectHandler();
+    }
+    this.setState({email: '', password: ''});
   };
 
   render() {

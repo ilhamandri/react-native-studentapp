@@ -1,9 +1,14 @@
 import React, {Component} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity, Alert} from 'react-native';
 import {RNCamera} from 'react-native-camera';
-// import QRCodeScanner from 'react-native-qrcode-scanner';
+import {fetchData} from '../../utils/helper';
+import AsyncStorage from '@react-native-community/async-storage';
 
 class ScanAbsen extends Component {
+  constructor(props) {
+    super(props);
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -21,22 +26,32 @@ class ScanAbsen extends Component {
             buttonNegative: 'Cancel',
           }}
           barcodeTypes={[RNCamera.Constants.BarCodeType.qr]}
-          onGoogleVisionBarcodesDetected={({barcodes}) => {
-            console.log(barcodes[0].data);
-
-            this.props.navigation.navigate('BarcodeValue', {
-              data: barcodes[0].data,
-            });
-          }}
+          onGoogleVisionBarcodesDetected={this.scannedQR}
           // onBarcodeRead={this.onBarcodeRead}
         />
       </View>
     );
   }
 
-  // onBarcodeRead = ({data, rawData, type, bounds}) => {
-  //   console.log(`The data is ${data} and type is ${type}`);
-  // };
+  scannedQR = async ({barcodes}) => {
+    const {navigation} = this.props;
+    navigation.navigate('Profil');
+    const qrKey = barcodes[0].data;
+    const userToken = await AsyncStorage.getItem('token');
+    console.log('qrKey : ', qrKey);
+    console.log('userToken : ', userToken);
+    const data = {qr_code: qrKey, token: userToken};
+    const post = await fetchData(
+      'POST',
+      'http://192.168.0.112/web-absensi/post_qr.php',
+      data,
+    );
+    console.log('post : ', post);
+    // this.setState({userToken: getUserToken});
+    // console.log(this.state.userToken);
+    // const data = {qrKey, userToken: getuserToken};
+    // console.log(data);
+  };
 }
 
 const styles = StyleSheet.create({

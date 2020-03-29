@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {
   StyleSheet,
   View,
@@ -11,78 +11,39 @@ import {
 } from 'react-native';
 
 import AsyncStorage from '@react-native-community/async-storage';
+import {fetchData} from '../../utils/helper';
 
-export default class DaftarMatkul extends React.Component {
+export default class DaftarMatkul extends Component {
   constructor(props) {
     super(props);
     this.state = {
       loading: false,
+      namaMahasiswa: '',
       matkul: [],
     };
   }
 
-  // getDaftarAbsen = async () => {
-  //   try {
-  //     const daftarAbsen = await AsyncStorage.get;
-  //   }
-  // };
-
   getMatkul = async () => {
-    try {
-      const value = await AsyncStorage.getItem('daftarMatkul');
-      if (value !== null) {
-        // value previously stored
-        // console.log(value);
-        this.setState({matkul: JSON.parse(value)});
-      }
-    } catch (e) {
-      // error reading value
-    }
+    const token = await AsyncStorage.getItem('token');
+    const data = {token};
+    const daftarMatkul = await fetchData(
+      'POST',
+      'http://192.168.0.112/web-absensi/get_matkul.php',
+      data,
+    );
+    // console.log(daftarMatkul);
+    this.setState({matkul: daftarMatkul.matakuliah});
   };
 
-  // getData = async () => {
-  //   this.setState({loading: true});
-  //   try {
-  //     let response = await fetch(GlobalVar.host + 'employees');
-  //     let responseJson = await response.json();
-  //     await AsyncStorage.setItem(
-  //       '@employees',
-  //       JSON.stringify(responseJson.data),
-  //     );
-  //     // console.log(responseJson.data);
-  //     this.setState({data: responseJson.data, loading: false});
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
-
   componentDidMount = async () => {
-    // await this.getFromStorage();
+    const nama = await AsyncStorage.getItem('name');
+    this.setState({namaMahasiswa: nama});
     await this.getMatkul();
   };
 
-  cekAbsensiMatkul = async () => {
-    this.props.navigation.navigate('AbsensiMatkul');
-
-    const getAbsen = {
-      token: await AsyncStorage.getItem('token'),
-      matakuliah_id: 1,
-    };
-
-    fetch('http://192.168.0.105/web-absensi/get_absensi.php', {
-      method: 'POST', // or 'PUT'
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(getAbsen),
-    })
-      .then(response => response.json())
-      .then(data => {
-        console.log('Success:', data);
-      })
-      .catch(error => {
-        console.error('Error:', error);
-      });
+  cekAbsensiMatkul = id => {
+    const {navigation} = this.props;
+    navigation.navigate('AbsensiMatkul', {id});
   };
 
   FlatListItemSeparator = () => {
@@ -100,29 +61,29 @@ export default class DaftarMatkul extends React.Component {
   renderItem = ({item}) => (
     <TouchableOpacity
       style={styles.list}
-      onLongPress={() => this.deleteItem(item)}
-      onPress={() => this.cekAbsensiMatkul()}>
-      <Text style={styles.lightText}>{item.kode}</Text>
-      <Text style={styles.lightText}>{item.nama}</Text>
-      <Text style={styles.lightText}>{item.sks}</Text>
+      onPress={() => this.cekAbsensiMatkul(item.id)}>
+      <Text>{item.kode}</Text>
+      <Text>{item.nama}</Text>
+      <Text>{item.sks}</Text>
     </TouchableOpacity>
   );
 
   render() {
+    const {namaMahasiswa, matkul, loading} = this.state;
+
     return (
       <View style={styles.container}>
-        <Text style={{fontSize: 20, marginVertical: 10}}>Selamat Datang</Text>
+        <Text style={{fontSize: 20, marginVertical: 10}}>
+          Selamat Datang, {namaMahasiswa}
+        </Text>
         <View style={{borderBottomWidth: 1}}></View>
         <FlatList
-          data={this.state.matkul}
+          data={matkul}
           ItemSeparatorComponent={this.FlatListItemSeparator}
-          renderItem={item => this.renderItem(item)}
-          keyExtractor={item => item.id.toString()}
+          renderItem={this.renderItem}
+          keyExtractor={item => item.id}
           refreshControl={
-            <RefreshControl
-              refreshing={this.state.loading}
-              onRefresh={() => this.getMatkul()}
-            />
+            <RefreshControl refreshing={loading} onRefresh={this.getMatkul} />
           }
         />
       </View>
