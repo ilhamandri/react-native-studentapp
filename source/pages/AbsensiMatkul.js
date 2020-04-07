@@ -3,6 +3,7 @@ import {View, Text, FlatList, StyleSheet} from 'react-native';
 
 import AsyncStorage from '@react-native-community/async-storage';
 import {fetchData} from '../utils/helper';
+import Connection from '../Connection';
 
 class AbsensiMatkul extends Component {
   constructor(props) {
@@ -26,7 +27,7 @@ class AbsensiMatkul extends Component {
 
     const dataAbsen = await fetchData(
       'POST',
-      'http://192.168.0.112/web-absensi/get_absensi.php',
+      Connection.host + 'get_absensi.php',
       getAbsen,
     );
     // console.log(dataAbsen);

@@ -3,6 +3,7 @@ import {View, Text, StyleSheet, TouchableOpacity, Alert} from 'react-native';
 import {RNCamera} from 'react-native-camera';
 import {fetchData} from '../../utils/helper';
 import AsyncStorage from '@react-native-community/async-storage';
+import Connection from '../../Connection';
 
 class ScanAbsen extends Component {
   constructor(props) {
@@ -41,11 +42,8 @@ class ScanAbsen extends Component {
     console.log('qrKey : ', qrKey);
     console.log('userToken : ', userToken);
     const data = {qr_code: qrKey, token: userToken};
-    const post = await fetchData(
-      'POST',
-      'http://192.168.0.112/web-absensi/post_qr.php',
-      data,
-    );
+
+    const post = await fetchData('POST', Connection.host + 'post_qr.php', data);
     console.log('post : ', post);
     // this.setState({userToken: getUserToken});
     // console.log(this.state.userToken);

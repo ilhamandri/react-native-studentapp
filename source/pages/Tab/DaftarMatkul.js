@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 
 import AsyncStorage from '@react-native-community/async-storage';
+import Connection from '../../Connection';
 import {fetchData} from '../../utils/helper';
 
 export default class DaftarMatkul extends Component {
@@ -28,7 +29,7 @@ export default class DaftarMatkul extends Component {
     const data = {token};
     const daftarMatkul = await fetchData(
       'POST',
-      'http://192.168.0.112/web-absensi/get_matkul.php',
+      Connection.host + 'get_matkul.php',
       data,
     );
     // console.log(daftarMatkul);

@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 
 import AsyncStorage from '@react-native-community/async-storage';
+import Connection from '../Connection';
 import {fetchData} from '../utils/helper';
 
 class Login extends Component {
@@ -51,7 +52,7 @@ class Login extends Component {
 
     const {STATUS_CODE, mahasiswa} = await fetchData(
       'POST',
-      'http://192.168.0.112/web-absensi/login_api.php',
+      Connection.host + 'login_api.php',
       loginData,
     );
 
