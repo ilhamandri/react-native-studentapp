@@ -25,7 +25,7 @@ class Login extends Component {
     };
   }
 
-  successHandler = async mahasiswa => {
+  successHandler = async (mahasiswa) => {
     const {navigation} = this.props;
     await AsyncStorage.setItem('name', mahasiswa.nama);
     await AsyncStorage.setItem('token', mahasiswa.token);
@@ -86,7 +86,7 @@ class Login extends Component {
               />
               <TextInput
                 placeholder={'Email'}
-                onChangeText={email => this.setState({email: email})}
+                onChangeText={(email) => this.setState({email: email})}
                 value={this.state.email}
                 style={styles.inputEmailPass}
               />
@@ -99,7 +99,7 @@ class Login extends Component {
               <TextInput
                 secureTextEntry={true}
                 placeholder={'Password'}
-                onChangeText={password => this.setState({password: password})}
+                onChangeText={(password) => this.setState({password: password})}
                 value={this.state.password}
                 style={styles.inputEmailPass}
               />
@@ -130,7 +130,8 @@ const styles = StyleSheet.create({
     height: 450,
     width: 300,
     borderRadius: 20,
-    borderWidth: 1,
+    borderWidth: 2,
+    borderColor: '#186049',
   },
   imageHeader: {
     flex: 1,
@@ -165,7 +166,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   btnTouch: {
-    backgroundColor: 'green',
+    backgroundColor: '#247158',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 10,

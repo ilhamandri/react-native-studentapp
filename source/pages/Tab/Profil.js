@@ -30,74 +30,129 @@ class Profile extends Component {
     const {profile} = this.state;
 
     return (
-      <View style={styles.globalContainer}>
+      <View style={styles.container.global}>
         {/* container */}
-        <View style={{flex: 1}}></View>
+        <View style={{flex: 0.5}}></View>
         {/* Main Container */}
-        <View style={styles.mainContainer}>
-          <View style={styles.textContainer}>
-            <Text style={{marginVertical: 5}}>Nama : </Text>
-            <Text>{profile.nama}</Text>
+        <View style={styles.container.main}>
+          <View style={styles.container.text}>
+            <Text style={styles.text.name}>Nama : </Text>
+            <Text style={styles.text.value}>{profile.nama}</Text>
           </View>
 
-          <View style={styles.textContainer}>
-            <Text style={{marginVertical: 5}}>NPM : </Text>
-            <Text>{profile.npm}</Text>
+          <View style={styles.container.text}>
+            <Text style={styles.text.name}>NPM : </Text>
+            <Text style={styles.text.value}>{profile.npm}</Text>
           </View>
 
-          <View style={styles.textContainer}>
-            <Text style={{marginVertical: 5}}>Program Studi : </Text>
-            <Text>{profile.prodi}</Text>
+          <View style={styles.container.text}>
+            <Text style={styles.text.name}>Program Studi : </Text>
+            <Text style={styles.text.value}>{profile.prodi}</Text>
           </View>
 
-          <View style={styles.textContainer}>
-            <Text style={{marginVertical: 5}}>Email : </Text>
-            <Text>{profile.email}</Text>
+          <View style={styles.container.text}>
+            <Text style={styles.text.name}>Email : </Text>
+            <Text style={styles.text.value}>{profile.email}</Text>
           </View>
         </View>
 
-        <TouchableOpacity style={styles.button} onPress={this.logoutFunc}>
-          <Text style={styles.buttonText}>LOGOUT</Text>
+        <TouchableOpacity
+          style={styles.button.default}
+          onPress={this.logoutFunc}>
+          <Text style={styles.button.text}>LOGOUT</Text>
         </TouchableOpacity>
 
-        <View style={{flex: 1}}></View>
+        <View style={{flex: 0.5}}></View>
       </View>
     );
   }
 }
 
-const styles = StyleSheet.create({
-  globalContainer: {
-    flex: 1,
-    alignItems: 'center',
-  },
-  mainContainer: {
-    borderWidth: 1,
-    borderRadius: 10,
-    flex: 2,
-    backgroundColor: 'khaki',
-    width: '80%',
-    padding: 10,
-    justifyContent: 'center',
-  },
-  textContainer: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    marginVertical: 10,
+const styles = {
+  container: {
+    global: {
+      flex: 1,
+      alignItems: 'center',
+    },
+    main: {
+      borderWidth: 1,
+      borderColor: '#186049',
+      borderRadius: 10,
+      flex: 3,
+      width: '80%',
+      padding: 10,
+    },
+    text: {
+      // alignItems: 'center',
+      marginVertical: 8,
+      backgroundColor: '#247158',
+      borderRadius: 15,
+      height: 70,
+    },
   },
   button: {
-    backgroundColor: 'red',
-    width: 200,
-    marginVertical: 10,
-    borderRadius: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
+    default: {
+      backgroundColor: '#247158',
+      width: 200,
+      marginVertical: 10,
+      borderRadius: 10,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    text: {
+      paddingVertical: 8,
+      color: 'white',
+      fontWeight: 'bold',
+    },
   },
-  buttonText: {
-    paddingVertical: 8,
-    color: 'white',
-    fontWeight: 'bold',
+  text: {
+    name: {
+      marginVertical: 5,
+      marginHorizontal: 10,
+      color: '#f8f6f5',
+      fontWeight: 'bold',
+    },
+    value: {
+      marginVertical: 5,
+      marginHorizontal: 10,
+      color: '#f8f6f5',
+      fontSize: 18,
+    },
   },
-});
+};
+
+// const styles = StyleSheet.create({
+//   globalContainer: {
+//     flex: 1,
+//     alignItems: 'center',
+//   },
+//   mainContainer: {
+//     borderWidth: 1,
+//     borderRadius: 10,
+//     flex: 2,
+//     backgroundColor: 'khaki',
+//     width: '80%',
+//     padding: 10,
+//     justifyContent: 'center',
+//   },
+//   textContainer: {
+//     alignItems: 'center',
+//     flexDirection: 'row',
+//     marginVertical: 10,
+//   },
+//   button: {
+//     backgroundColor: 'red',
+//     width: 200,
+//     marginVertical: 10,
+//     borderRadius: 10,
+//     alignItems: 'center',
+//     justifyContent: 'center',
+//   },
+//   buttonText: {
+//     paddingVertical: 8,
+//     color: 'white',
+//     fontWeight: 'bold',
+//   },
+// });
 
 export default Profile;

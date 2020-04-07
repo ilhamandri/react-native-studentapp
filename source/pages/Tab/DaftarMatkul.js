@@ -42,7 +42,7 @@ export default class DaftarMatkul extends Component {
     await this.getMatkul();
   };
 
-  cekAbsensiMatkul = id => {
+  cekAbsensiMatkul = (id) => {
     const {navigation} = this.props;
     navigation.navigate('AbsensiMatkul', {id});
   };
@@ -82,7 +82,7 @@ export default class DaftarMatkul extends Component {
           data={matkul}
           ItemSeparatorComponent={this.FlatListItemSeparator}
           renderItem={this.renderItem}
-          keyExtractor={item => item.id}
+          keyExtractor={(item) => item.id}
           refreshControl={
             <RefreshControl refreshing={loading} onRefresh={this.getMatkul} />
           }

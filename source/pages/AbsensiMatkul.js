@@ -41,10 +41,22 @@ class AbsensiMatkul extends Component {
     }
   };
 
+  FlatListItemSeparator = () => {
+    return (
+      <View
+        style={{
+          height: 0.5,
+          width: '100%',
+          backgroundColor: 'white',
+        }}
+      />
+    );
+  };
+
   renderItem = ({item}) => {
     return (
       <View style={styles.listContainer}>
-        <Text>
+        <Text style={styles.item}>
           {item.jam} / {item.tanggal}
         </Text>
       </View>
@@ -62,11 +74,11 @@ class AbsensiMatkul extends Component {
         <View style={styles.summaryContainer}>
           <View style={styles.summaryChildLeft}>
             <Text style={styles.summaryText}>JUMLAH ABSEN</Text>
-            <Text style={{}}>{resume.jumlah}</Text>
+            <Text style={styles.summaryText}>{resume.jumlah}</Text>
           </View>
           <View style={styles.summaryChildRight}>
             <Text style={styles.summaryText}>TOTAL PERTEMUAN</Text>
-            <Text style={{}}>{resume.total}</Text>
+            <Text style={styles.summaryText}>{resume.total}</Text>
           </View>
         </View>
         <View style={styles.jamTanggalContainer}>
@@ -75,7 +87,8 @@ class AbsensiMatkul extends Component {
         <FlatList
           data={data}
           renderItem={this.renderItem}
-          keyExtractor={item => item.jam}
+          keyExtractor={(item) => item.jam}
+          ItemSeparatorComponent={this.FlatListItemSeparator}
         />
       </View>
     );
@@ -102,18 +115,21 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
     height: 40,
     width: '50%',
-    backgroundColor: 'lime',
+    borderRightWidth: 1,
+    borderColor: 'white',
+    backgroundColor: '#186049',
   },
   summaryChildRight: {
     alignItems: 'center',
     alignSelf: 'flex-end',
     height: 40,
     width: '50%',
-    backgroundColor: 'khaki',
+    backgroundColor: '#186049',
   },
   summaryText: {
     fontSize: 12,
     fontWeight: 'bold',
+    color: 'white',
   },
   jamTanggalContainer: {
     justifyContent: 'center',
@@ -123,11 +139,15 @@ const styles = StyleSheet.create({
   jamTanggalText: {
     fontSize: 15,
     fontWeight: 'bold',
+    // color: '#6ab29b',
   },
   listContainer: {
     borderBottomWidth: 0.5,
     padding: 5,
-    backgroundColor: 'pink',
+    backgroundColor: '#247158',
+  },
+  item: {
+    color: 'white',
   },
 });
 
