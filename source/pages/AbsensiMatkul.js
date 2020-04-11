@@ -55,7 +55,7 @@ class AbsensiMatkul extends Component {
 
   renderItem = ({item}) => {
     return (
-      <View style={styles.listContainer}>
+      <View style={styles.container.list}>
         <Text style={styles.item}>
           {item.jam} / {item.tanggal}
         </Text>
@@ -68,26 +68,26 @@ class AbsensiMatkul extends Component {
 
     return (
       <View>
-        <View style={styles.headerContainer}>
+        <View style={styles.container.header}>
           <Text style={styles.header}> ABSENSI </Text>
         </View>
-        <View style={styles.summaryContainer}>
-          <View style={styles.summaryChildLeft}>
-            <Text style={styles.summaryText}>JUMLAH ABSEN</Text>
-            <Text style={styles.summaryText}>{resume.jumlah}</Text>
+        <View style={styles.container.summary}>
+          <View style={styles.summary.childLeft}>
+            <Text style={styles.summary.text}>JUMLAH ABSEN</Text>
+            <Text style={styles.summary.text}>{resume.jumlah}</Text>
           </View>
-          <View style={styles.summaryChildRight}>
-            <Text style={styles.summaryText}>TOTAL PERTEMUAN</Text>
-            <Text style={styles.summaryText}>{resume.total}</Text>
+          <View style={styles.summary.childRight}>
+            <Text style={styles.summary.text}>TOTAL PERTEMUAN</Text>
+            <Text style={styles.summary.text}>{resume.total}</Text>
           </View>
         </View>
-        <View style={styles.jamTanggalContainer}>
+        <View style={styles.container.jamTanggal}>
           <Text style={styles.jamTanggalText}>JAM / TANGGAL ABSEN : </Text>
         </View>
         <FlatList
           data={data}
           renderItem={this.renderItem}
-          keyExtractor={(item) => item.jam}
+          keyExtractor={item => item.jam}
           ItemSeparatorComponent={this.FlatListItemSeparator}
         />
       </View>
@@ -95,60 +95,64 @@ class AbsensiMatkul extends Component {
   }
 }
 
-const styles = StyleSheet.create({
+const styles = {
+  container: {
+    header: {
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderBottomWidth: 1,
+      paddingVertical: 8,
+    },
+    summary: {
+      flexDirection: 'row',
+      borderBottomWidth: 1,
+    },
+    list: {
+      borderBottomWidth: 0.5,
+      padding: 5,
+      backgroundColor: '#247158',
+    },
+    jamTanggal: {
+      justifyContent: 'center',
+      borderBottomWidth: 1,
+      padding: 5,
+    },
+  },
+  summary: {
+    childLeft: {
+      alignItems: 'center',
+      alignSelf: 'flex-start',
+      height: 40,
+      width: '50%',
+      borderRightWidth: 1,
+      borderColor: 'white',
+      backgroundColor: '#186049',
+    },
+    childRight: {
+      alignItems: 'center',
+      alignSelf: 'flex-end',
+      height: 40,
+      width: '50%',
+      backgroundColor: '#186049',
+    },
+    text: {
+      fontSize: 12,
+      fontWeight: 'bold',
+      color: 'white',
+    },
+  },
   header: {
     fontSize: 20,
     fontWeight: 'bold',
-  },
-  headerContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderBottomWidth: 1,
-    paddingVertical: 8,
-  },
-  summaryContainer: {
-    flexDirection: 'row',
-    borderBottomWidth: 1,
-  },
-  summaryChildLeft: {
-    alignItems: 'center',
-    alignSelf: 'flex-start',
-    height: 40,
-    width: '50%',
-    borderRightWidth: 1,
-    borderColor: 'white',
-    backgroundColor: '#186049',
-  },
-  summaryChildRight: {
-    alignItems: 'center',
-    alignSelf: 'flex-end',
-    height: 40,
-    width: '50%',
-    backgroundColor: '#186049',
-  },
-  summaryText: {
-    fontSize: 12,
-    fontWeight: 'bold',
-    color: 'white',
-  },
-  jamTanggalContainer: {
-    justifyContent: 'center',
-    borderBottomWidth: 1,
-    padding: 5,
   },
   jamTanggalText: {
     fontSize: 15,
     fontWeight: 'bold',
     // color: '#6ab29b',
   },
-  listContainer: {
-    borderBottomWidth: 0.5,
-    padding: 5,
-    backgroundColor: '#247158',
-  },
   item: {
     color: 'white',
   },
-});
+};
 
 export default AbsensiMatkul;

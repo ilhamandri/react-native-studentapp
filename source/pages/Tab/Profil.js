@@ -32,7 +32,7 @@ class Profile extends Component {
     return (
       <View style={styles.container.global}>
         {/* container */}
-        <View style={{flex: 0.5}}></View>
+        <View style={{flex: 0.5}} />
         {/* Main Container */}
         <View style={styles.container.main}>
           <View style={styles.container.text}>
@@ -62,7 +62,7 @@ class Profile extends Component {
           <Text style={styles.button.text}>LOGOUT</Text>
         </TouchableOpacity>
 
-        <View style={{flex: 0.5}}></View>
+        <View style={{flex: 0.5}} />
       </View>
     );
   }

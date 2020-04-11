@@ -42,7 +42,7 @@ export default class DaftarMatkul extends Component {
     await this.getMatkul();
   };
 
-  cekAbsensiMatkul = (id) => {
+  cekAbsensiMatkul = id => {
     const {navigation} = this.props;
     navigation.navigate('AbsensiMatkul', {id});
   };
@@ -77,12 +77,12 @@ export default class DaftarMatkul extends Component {
         <Text style={{fontSize: 20, marginVertical: 10}}>
           Selamat Datang, {namaMahasiswa}
         </Text>
-        <View style={{borderBottomWidth: 1}}></View>
+        <View style={{borderBottomWidth: 1}} />
         <FlatList
           data={matkul}
           ItemSeparatorComponent={this.FlatListItemSeparator}
           renderItem={this.renderItem}
-          keyExtractor={(item) => item.id}
+          keyExtractor={item => item.id}
           refreshControl={
             <RefreshControl refreshing={loading} onRefresh={this.getMatkul} />
           }
@@ -92,7 +92,7 @@ export default class DaftarMatkul extends Component {
   }
 }
 
-const styles = StyleSheet.create({
+const styles = {
   container: {
     flex: 1,
     backgroundColor: '#fff',
@@ -108,4 +108,4 @@ const styles = StyleSheet.create({
     margin: 5,
     backgroundColor: '#fff',
   },
-});
+};

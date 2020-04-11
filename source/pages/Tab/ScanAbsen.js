@@ -52,7 +52,7 @@ class ScanAbsen extends Component {
   };
 }
 
-const styles = StyleSheet.create({
+const styles = {
   container: {
     flex: 1,
     flexDirection: 'column',
@@ -72,6 +72,6 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     margin: 20,
   },
-});
+};
 
 export default ScanAbsen;
