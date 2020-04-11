@@ -20,7 +20,6 @@ class Routes extends Component {
           <ScreenStack.Screen name="Login" component={Login} />
           <ScreenStack.Screen name="Tab" component={Tab} />
           <ScreenStack.Screen name="AbsensiMatkul" component={AbsensiMatkul} />
-          <ScreenStack.Screen name="BarcodeValue" component={BarcodeValue} />
         </ScreenStack.Navigator>
       </NavigationContainer>
     );
