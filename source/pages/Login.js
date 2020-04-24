@@ -20,8 +20,6 @@ class Login extends Component {
     this.state = {
       email: 'ilham@unpar.ac.id',
       password: 'ilham',
-      name: '',
-      loading: false,
     };
   }
 
@@ -81,7 +79,7 @@ class Login extends Component {
           <View style={styles.form.container}>
             <View style={styles.form.line}>
               <Image
-                source={require('./../assets/images/logounpar.png')}
+                source={require('./../assets/images/user.png')}
                 style={styles.icon}
               />
               <TextInput
@@ -93,7 +91,7 @@ class Login extends Component {
             </View>
             <View style={styles.form.line}>
               <Image
-                source={require('./../assets/images/logounpar.png')}
+                source={require('./../assets/images/password.png')}
                 style={styles.icon}
               />
               <TextInput
@@ -126,6 +124,7 @@ const styles = {
       flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
+      backgroundColor: 'white',
     },
     content: {
       height: 450,
@@ -154,6 +153,7 @@ const styles = {
     },
     line: {
       flexDirection: 'row',
+      paddingVertical: 3,
     },
   },
   icon: {
