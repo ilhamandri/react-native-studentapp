@@ -36,19 +36,31 @@ class ScanAbsen extends Component {
 
   scannedQR = async ({barcodes}) => {
     const {navigation} = this.props;
-    navigation.navigate('Profil');
+
+    // ambil isi qr
     const qrKey = barcodes[0].data;
     const userToken = await AsyncStorage.getItem('token');
-    console.log('qrKey : ', qrKey);
-    console.log('userToken : ', userToken);
+
+    // console.log('qrKey : ', qrKey);
+    // console.log('userToken : ', userToken);
+
     const data = {qr_code: qrKey, token: userToken};
 
     const post = await fetchData('POST', Connection.host + 'post_qr.php', data);
     console.log('post : ', post);
-    // this.setState({userToken: getUserToken});
-    // console.log(this.state.userToken);
-    // const data = {qrKey, userToken: getuserToken};
-    // console.log(data);
+
+    // Memeriksa status code untuk scanning
+    const {ERROR, STATUS_CODE} = post;
+    // console.log('err : ', ERROR);
+    // console.log('status :', STATUS_CODE);
+
+    if (STATUS_CODE === 'NOK') {
+      Alert.alert('SCAN GAGAL', 'Kode qr tidak sesuai');
+      navigation.navigate('DaftarMatkul');
+    } else {
+      Alert.alert('SCAN BERHASIL', 'Berhasil melakukan absen');
+      navigation.navigate('DaftarMatkul');
+    }
   };
 }
 
