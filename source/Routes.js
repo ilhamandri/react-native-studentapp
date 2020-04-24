@@ -6,7 +6,6 @@ import {createStackNavigator} from '@react-navigation/stack';
 import Login from './pages/Login';
 import Tab from './pages/Tab/';
 import AbsensiMatkul from './pages/AbsensiMatkul';
-import BarcodeValue from './pages/BarcodeValue';
 
 const ScreenStack = createStackNavigator();
 
