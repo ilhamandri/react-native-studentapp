@@ -13,7 +13,12 @@ const BottomTab = createBottomTabNavigator();
 class Index extends Component {
   render() {
     return (
-      <BottomTab.Navigator initialRouteName="DaftarMatkul">
+      <BottomTab.Navigator
+        initialRouteName="DaftarMatkul"
+        tabBarOptions={{
+          activeTintColor: 'white',
+          activeBackgroundColor: '#247158',
+        }}>
         <BottomTab.Screen
           name="DaftarMatkul"
           component={DaftarMatkul}
