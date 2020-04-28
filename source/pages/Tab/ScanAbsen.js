@@ -1,5 +1,12 @@
 import React, {Component} from 'react';
-import {View, Text, StyleSheet, TouchableOpacity, Alert} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Alert,
+  Button,
+} from 'react-native';
 import {RNCamera} from 'react-native-camera';
 import {fetchData} from '../../utils/helper';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -8,6 +15,10 @@ import Connection from '../../Connection';
 class ScanAbsen extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      code: '',
+    };
   }
 
   render() {
@@ -18,7 +29,9 @@ class ScanAbsen extends Component {
             this.camera = ref;
           }}
           style={styles.preview}
+          autoFocus={RNCamera.Constants.AutoFocus.on}
           type={RNCamera.Constants.Type.back}
+          // focusDepth={1.0}
           flashMode={RNCamera.Constants.FlashMode.off}
           androidCameraPermissionOptions={{
             title: 'Permission to use camera',
@@ -27,39 +40,41 @@ class ScanAbsen extends Component {
             buttonNegative: 'Cancel',
           }}
           barcodeTypes={[RNCamera.Constants.BarCodeType.qr]}
-          onGoogleVisionBarcodesDetected={this.scannedQR}
-          // onBarcodeRead={this.onBarcodeRead}
+          // onGoogleVisionBarcodesDetected={this.scannedQR}
+          onBarCodeRead={this.onBarCodeRead}
         />
       </View>
     );
   }
 
-  scannedQR = async ({barcodes}) => {
+  onBarCodeRead = async barcode => {
+    const {code} = this.state;
     const {navigation} = this.props;
 
-    // ambil isi qr
-    const qrKey = barcodes[0].data;
-    const userToken = await AsyncStorage.getItem('token');
+    if (code !== barcode.data) {
+      this.setState({code: barcode.data});
+      const qr_value = barcode.data;
+      const user_token = await AsyncStorage.getItem('token');
 
-    // console.log('qrKey : ', qrKey);
-    // console.log('userToken : ', userToken);
+      const data_to_send = {
+        qr_code: qr_value,
+        token: user_token,
+      };
 
-    const data = {qr_code: qrKey, token: userToken};
+      const post = await fetchData(
+        'POST',
+        Connection.host + 'post_qr.php',
+        data_to_send,
+      );
+      const {ERROR, STATUS_CODE} = post;
 
-    const post = await fetchData('POST', Connection.host + 'post_qr.php', data);
-    console.log('post : ', post);
-
-    // Memeriksa status code untuk scanning
-    const {ERROR, STATUS_CODE} = post;
-    // console.log('err : ', ERROR);
-    // console.log('status :', STATUS_CODE);
-
-    if (STATUS_CODE === 'NOK') {
-      Alert.alert('SCAN GAGAL', 'Kode qr tidak sesuai');
-      navigation.navigate('DaftarMatkul');
-    } else {
-      Alert.alert('SCAN BERHASIL', 'Berhasil melakukan absen');
-      navigation.navigate('DaftarMatkul');
+      if (STATUS_CODE === 'OK') {
+        Alert.alert('SCAN BERHASIL', 'Berhasil melakukan absen');
+        navigation.navigate('DaftarMatkul');
+      } else {
+        Alert.alert('SCAN GAGAL', ERROR);
+        navigation.navigate('DaftarMatkul');
+      }
     }
   };
 }
