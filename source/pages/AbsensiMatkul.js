@@ -11,11 +11,14 @@ class AbsensiMatkul extends Component {
     this.state = {
       data: [],
       resume: {},
+      percentage: 0,
     };
   }
 
   componentDidMount = async () => {
     const {route} = this.props;
+    // const {resume} = this.state;
+
     const matkulID = route.params.id;
 
     const token = await AsyncStorage.getItem('token');
@@ -30,7 +33,9 @@ class AbsensiMatkul extends Component {
       Connection.host + 'get_absensi.php',
       getAbsen,
     );
-    // console.log(dataAbsen);
+
+    // console.log('data absen :', dataAbsen);
+
     const panjangJSON = Object.keys(dataAbsen).length;
     if (panjangJSON > 0) {
       const {data, resume} = dataAbsen;
@@ -39,6 +44,16 @@ class AbsensiMatkul extends Component {
         resume,
       });
     }
+
+    // set persentase absen
+    let percentage = this.absentPercentage();
+    this.setState({percentage});
+  };
+
+  absentPercentage = () => {
+    const {resume} = this.state;
+    let percentage = (resume.jumlah / resume.total) * 100;
+    return percentage;
   };
 
   FlatListItemSeparator = () => {
@@ -64,9 +79,10 @@ class AbsensiMatkul extends Component {
   };
 
   render() {
-    const {data, resume} = this.state;
+    const {data, resume, percentage} = this.state;
 
     return (
+      // jangan lupa add flex ke view paling luar
       <View>
         <View style={styles.container.header}>
           <Text style={styles.header}> ABSENSI </Text>
@@ -80,6 +96,11 @@ class AbsensiMatkul extends Component {
             <Text style={styles.summary.text}>TOTAL PERTEMUAN</Text>
             <Text style={styles.summary.text}>{resume.total}</Text>
           </View>
+        </View>
+        <View style={styles.container.persentase}>
+          <Text style={styles.summary.text}>
+            PERSENTASE KEHADIRAN : {percentage} %{' '}
+          </Text>
         </View>
         <View style={styles.container.jamTanggal}>
           <Text style={styles.jamTanggalText}>JAM / TANGGAL ABSEN : </Text>
@@ -105,7 +126,8 @@ const styles = {
     },
     summary: {
       flexDirection: 'row',
-      borderBottomWidth: 1,
+      borderBottomWidth: 0.5,
+      borderColor: 'white',
     },
     list: {
       borderBottomWidth: 0.5,
@@ -116,6 +138,10 @@ const styles = {
       justifyContent: 'center',
       borderBottomWidth: 1,
       padding: 5,
+    },
+    persentase: {
+      alignItems: 'center',
+      backgroundColor: '#247158',
     },
   },
   summary: {
