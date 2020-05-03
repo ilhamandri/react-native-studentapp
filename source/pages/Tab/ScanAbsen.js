@@ -31,7 +31,6 @@ class ScanAbsen extends Component {
           style={styles.preview}
           autoFocus={RNCamera.Constants.AutoFocus.on}
           type={RNCamera.Constants.Type.back}
-          // focusDepth={1.0}
           flashMode={RNCamera.Constants.FlashMode.off}
           androidCameraPermissionOptions={{
             title: 'Permission to use camera',
@@ -39,8 +38,13 @@ class ScanAbsen extends Component {
             buttonPositive: 'Ok',
             buttonNegative: 'Cancel',
           }}
+          androidRecordAudioPermissionOptions={{
+            title: 'Permission to use audio recording',
+            message: 'We need your permission to use your audio',
+            buttonPositive: 'Ok',
+            buttonNegative: 'Cancel',
+          }}
           barcodeTypes={[RNCamera.Constants.BarCodeType.qr]}
-          // onGoogleVisionBarcodesDetected={this.scannedQR}
           onBarCodeRead={this.onBarCodeRead}
         />
       </View>
@@ -69,7 +73,7 @@ class ScanAbsen extends Component {
       const {ERROR, STATUS_CODE} = post;
 
       if (STATUS_CODE === 'OK') {
-        Alert.alert('SCAN BERHASIL', 'Berhasil melakukan absen');
+        Alert.alert('SCAN BERHASIL', ERROR);
         navigation.navigate('DaftarMatkul');
       } else {
         Alert.alert('SCAN GAGAL', ERROR);

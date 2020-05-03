@@ -7,7 +7,6 @@ import {
   Text,
   TouchableOpacity,
   Alert,
-  RefreshControl,
 } from 'react-native';
 
 import AsyncStorage from '@react-native-community/async-storage';
@@ -24,6 +23,7 @@ export default class DaftarMatkul extends Component {
     };
   }
 
+  // mendapatkan daftar matakuliah
   getMatkul = async () => {
     const token = await AsyncStorage.getItem('token');
     const data = {token};
@@ -32,7 +32,6 @@ export default class DaftarMatkul extends Component {
       Connection.host + 'get_matkul.php',
       data,
     );
-    // console.log(daftarMatkul);
     this.setState({matkul: daftarMatkul.matakuliah});
   };
 
@@ -42,11 +41,13 @@ export default class DaftarMatkul extends Component {
     await this.getMatkul();
   };
 
+  // fungsi pindah halaman ke absensi sesuai matkul
   cekAbsensiMatkul = id => {
     const {navigation} = this.props;
     navigation.navigate('AbsensiMatkul', {id});
   };
 
+  // garis pemisah item list
   FlatListItemSeparator = () => {
     return (
       <View
@@ -59,6 +60,7 @@ export default class DaftarMatkul extends Component {
     );
   };
 
+  // item list daftar matakuliah
   renderItem = ({item}) => (
     <TouchableOpacity
       style={styles.list}

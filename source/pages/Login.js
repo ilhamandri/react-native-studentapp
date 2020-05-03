@@ -23,6 +23,7 @@ class Login extends Component {
     };
   }
 
+  // penanganan sukses login
   successHandler = async mahasiswa => {
     const {navigation} = this.props;
     await AsyncStorage.setItem('name', mahasiswa.nama);
@@ -34,16 +35,18 @@ class Login extends Component {
     });
   };
 
+  // penanganan gagal login
   rejectHandler = () => {
     const {email, password} = this.state;
 
-    if (email == '' || password == '' || (email == '' && password == '')) {
+    if (email === '' || password === '' || (email === '' && password === '')) {
       Alert.alert('LOGIN GAGAL', 'Email atau Password tidak boleh kosong');
     } else {
       Alert.alert('LOGIN GAGAL', 'Email atau Password salah');
     }
   };
 
+  // fungsi login
   loginClicked = async () => {
     const {email, password} = this.state;
     const loginData = {email, password};
@@ -110,7 +113,6 @@ class Login extends Component {
               onPress={() => this.loginClicked()}>
               <Text style={styles.button.text}>LOGIN</Text>
             </TouchableOpacity>
-            {/* <Button title={'Token'} onPress={this.btnToken} /> */}
           </View>
         </View>
       </View>
@@ -186,64 +188,5 @@ const styles = {
     },
   },
 };
-
-// const styles = StyleSheet.create({
-//   globalContainer: {
-//     flex: 1,
-//     justifyContent: 'center',
-//     alignItems: 'center',
-//   },
-//   contentContainer: {
-//     height: 450,
-//     width: 300,
-//     borderRadius: 20,
-//     borderWidth: 2,
-//     borderColor: '#186049',
-//   },
-//   imageHeader: {
-//     flex: 1,
-//     justifyContent: 'center',
-//     alignItems: 'center',
-//   },
-//   image: {
-//     height: 100,
-//     width: 100,
-//   },
-//   formContainer: {
-//     flex: 2,
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//   },
-//   formLine: {
-//     flexDirection: 'row',
-//   },
-//   iconImage: {
-//     height: 50,
-//     width: 50,
-//     marginRight: 7,
-//   },
-//   inputEmailPass: {
-//     borderBottomWidth: 1,
-//     width: 150,
-//     marginLeft: 7,
-//   },
-//   btnContainer: {
-//     flex: 1,
-//     justifyContent: 'center',
-//     alignItems: 'center',
-//   },
-//   btnTouch: {
-//     backgroundColor: '#247158',
-//     justifyContent: 'center',
-//     alignItems: 'center',
-//     borderRadius: 10,
-//     width: 250,
-//   },
-//   btnText: {
-//     margin: 10,
-//     color: 'white',
-//     fontWeight: 'bold',
-//   },
-// });
 
 export default Login;

@@ -17,10 +17,7 @@ class AbsensiMatkul extends Component {
 
   componentDidMount = async () => {
     const {route} = this.props;
-    // const {resume} = this.state;
-
     const matkulID = route.params.id;
-
     const token = await AsyncStorage.getItem('token');
 
     const getAbsen = {
@@ -50,12 +47,14 @@ class AbsensiMatkul extends Component {
     this.setState({percentage});
   };
 
+  // persentase kehadiran
   absentPercentage = () => {
     const {resume} = this.state;
     let percentage = (resume.jumlah / resume.total) * 100;
     return percentage;
   };
 
+  // pemisah item list
   FlatListItemSeparator = () => {
     return (
       <View
@@ -68,6 +67,7 @@ class AbsensiMatkul extends Component {
     );
   };
 
+  // item list
   renderItem = ({item}) => {
     return (
       <View style={styles.container.list}>
@@ -83,7 +83,7 @@ class AbsensiMatkul extends Component {
 
     return (
       // jangan lupa add flex ke view paling luar
-      <View>
+      <View style={{flex: 1}}>
         <View style={styles.container.header}>
           <Text style={styles.header}> ABSENSI </Text>
         </View>
@@ -174,7 +174,6 @@ const styles = {
   jamTanggalText: {
     fontSize: 15,
     fontWeight: 'bold',
-    // color: '#6ab29b',
   },
   item: {
     color: 'white',

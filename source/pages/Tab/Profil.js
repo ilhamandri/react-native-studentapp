@@ -13,9 +13,9 @@ class Profile extends Component {
   componentDidMount = async () => {
     const getProfileValue = await AsyncStorage.getItem('profile');
     this.setState({profile: JSON.parse(getProfileValue)});
-    // console.log('Profile', getProfileValue);
   };
 
+  // fungsi logout
   logoutFunc = async () => {
     try {
       await AsyncStorage.clear();
@@ -23,7 +23,6 @@ class Profile extends Component {
     } catch (error) {
       console.log(error);
     }
-    // console.log(await AsyncStorage.getItem('daftarMatkul'));
   };
 
   render() {
@@ -120,39 +119,5 @@ const styles = {
     },
   },
 };
-
-// const styles = StyleSheet.create({
-//   globalContainer: {
-//     flex: 1,
-//     alignItems: 'center',
-//   },
-//   mainContainer: {
-//     borderWidth: 1,
-//     borderRadius: 10,
-//     flex: 2,
-//     backgroundColor: 'khaki',
-//     width: '80%',
-//     padding: 10,
-//     justifyContent: 'center',
-//   },
-//   textContainer: {
-//     alignItems: 'center',
-//     flexDirection: 'row',
-//     marginVertical: 10,
-//   },
-//   button: {
-//     backgroundColor: 'red',
-//     width: 200,
-//     marginVertical: 10,
-//     borderRadius: 10,
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//   },
-//   buttonText: {
-//     paddingVertical: 8,
-//     color: 'white',
-//     fontWeight: 'bold',
-//   },
-// });
 
 export default Profile;
