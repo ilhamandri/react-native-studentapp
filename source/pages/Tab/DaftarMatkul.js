@@ -85,9 +85,6 @@ export default class DaftarMatkul extends Component {
           ItemSeparatorComponent={this.FlatListItemSeparator}
           renderItem={this.renderItem}
           keyExtractor={item => item.id}
-          refreshControl={
-            <RefreshControl refreshing={loading} onRefresh={this.getMatkul} />
-          }
         />
       </View>
     );

@@ -31,8 +31,6 @@ class AbsensiMatkul extends Component {
       getAbsen,
     );
 
-    // console.log('data absen :', dataAbsen);
-
     const panjangJSON = Object.keys(dataAbsen).length;
     if (panjangJSON > 0) {
       const {data, resume} = dataAbsen;
@@ -43,14 +41,14 @@ class AbsensiMatkul extends Component {
     }
 
     // set persentase absen
-    let percentage = this.absentPercentage();
+    const percentage = this.absentPercentage();
     this.setState({percentage});
   };
 
   // persentase kehadiran
   absentPercentage = () => {
     const {resume} = this.state;
-    let percentage = (resume.jumlah / resume.total) * 100;
+    const percentage = Math.floor((resume.jumlah / resume.total) * 100);
     return percentage;
   };
 

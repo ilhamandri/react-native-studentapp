@@ -73,7 +73,7 @@ class ScanAbsen extends Component {
       const {ERROR, STATUS_CODE} = post;
 
       if (STATUS_CODE === 'OK') {
-        Alert.alert('SCAN BERHASIL', ERROR);
+        Alert.alert('SCAN BERHASIL', 'Anda berhasil melakukan absen');
         navigation.navigate('DaftarMatkul');
       } else {
         Alert.alert('SCAN GAGAL', ERROR);
