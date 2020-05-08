@@ -49,7 +49,8 @@ class AbsensiMatkul extends Component {
   absentPercentage = () => {
     const {resume} = this.state;
     const percentage = Math.floor((resume.jumlah / resume.total) * 100);
-    return percentage;
+    const value = isNaN(percentage) ? 0 : percentage;
+    return value;
   };
 
   // pemisah item list
